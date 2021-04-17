@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\floma\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\floma\\.nuget\\packages",
+      "G:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+    ]
+  }
+}

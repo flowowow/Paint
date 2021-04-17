@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RpYkk5UoAL616g39pdGMjgrM2VkBdQYmefAkRU4xIJksUkodwd3kypO8vV5LqFhKk0JZtCpn1Iq+MBZfz25ajg==",
+  "dgSpecHash": "rDE6nfklvIJ+fUoAu2ls3KyPhOvwj960Pt2ix838GeRbpQ3IbwFE7vdo4do6wFrxk9WjjfmR/H4vqN4vmHT/Jg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\floma\\Desktop\\Paint\\Paint.csproj",
+  "projectFilePath": "C:\\Users\\floma\\Paint\\Paint.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
