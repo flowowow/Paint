@@ -8,7 +8,6 @@ namespace Paint
     public partial class Form1 : Form
     {
         int pen_size = 10;
-        double form_shift_factor = 1.5;
         bool mouse_active = false;
         Point old_point = new Point();
         Point new_point = new Point();
@@ -48,16 +47,26 @@ namespace Paint
                 Graphics graphics = CreateGraphics();
                 new_point = new Point(args.X, args.Y);
                 SolidBrush brush = new SolidBrush(Color.Blue);
-                Rectangle rect = new Rectangle(args.X, args.Y, pen_size, pen_size);
-                // vector abs between old and new vector -> not used atm
-                // double distance = Math.Sqrt(Math.Pow((new_point.X - old_point.X), 2) + Math.Pow((new_point.Y - old_point.Y), 2));
-
-                // this slightly adjusts the rectangle's width and height to make the drawing look less stutteringly
-                // it helps a little but the result is still pretty ugly, especially when rapidly drawing diagonally
-                rect.Width = (Math.Abs(old_point.X - new_point.X) > pen_size / 2) ? Convert.ToInt32(Math.Abs(old_point.X - new_point.X) * form_shift_factor) : pen_size;
-                rect.Height = (Math.Abs(old_point.Y - new_point.Y) > pen_size / 2) ? Convert.ToInt32(Math.Abs(old_point.Y - new_point.Y) * form_shift_factor) : pen_size;
-
-                graphics.FillEllipse(brush, rect);
+                // Betrag der Vektoren der alten und der neuen Position
+                double distance = Math.Sqrt(Math.Pow((new_point.X - old_point.X), 2) + Math.Pow((new_point.Y - old_point.Y), 2));
+                // Wenn Distanz zwischen Intervallen so groß ist, dass die Lücke zwischen den platzierten Objekten größer als die Stiftgröße ist,
+                // werden so viele extra Objekte platziert, wie die Stiftgröße in die Distanz past
+                if (distance > pen_size / 2)
+                {
+                    double value = distance / (pen_size / 2);
+                    for (int i = 0; i < value; i++)
+                    {
+                        int x = old_point.X + Convert.ToInt32((new_point.X - old_point.X) / value * (i + 1));
+                        int y = old_point.Y + Convert.ToInt32((new_point.Y - old_point.Y) / value * (i + 1));
+                        Rectangle rect = new Rectangle(x, y, pen_size, pen_size);
+                        graphics.FillEllipse(brush, rect);
+                    }
+                }
+                else
+                {
+                    Rectangle rect = new Rectangle(args.X, args.Y, pen_size, pen_size);
+                    graphics.FillEllipse(brush, rect);
+                }
 
                 old_point = new_point;
             }
