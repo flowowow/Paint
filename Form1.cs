@@ -7,22 +7,25 @@ namespace Paint
 {
     public partial class Form1 : Form
     {
+        #region Variabeln
         int pen_size = 10;
-        Button EllipsisButton;
+        Button EllipsisButton, PenRed, PenBlue, PenGreen, PenPurple, PenWhite, PenBlack;
         bool mouse_active, EToolActive = false;
         Point old_point = new Point();
         Point new_point = new Point();
+        SolidBrush Pinsel = new SolidBrush(Color.Black);
+        Pen Stift = new Pen(Color.Black);
+        #endregion
         public Form1()
         {
             InitializeComponent();
-            this.MouseDown += MousePressed;
-            this.MouseUp += MouseReleased;
-            this.MouseMove += MouseMoved;
             pen_size = this.trackBar1.Value;            
         }
 
         // Für Menü
         // https://www.oreilly.com/library/view/net-windows-forms/0596003382/ch04.html
+
+        
 
         protected void MousePressed(object instance, MouseEventArgs args)
         {
@@ -33,6 +36,44 @@ namespace Paint
                 mouse_active = true;
             }  
         }
+                #region ColorKnöppe
+        private void ChangeBlack(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.Black);
+            Stift = new Pen(Color.Black);
+        }
+
+        private void ChangeWhite(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.White);
+            Stift = new Pen(Color.White);
+        }
+
+        private void ChangeRed(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.Red);
+            Stift = new Pen(Color.Red);
+        }
+
+        private void ChangePurple(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.Purple);
+            Stift = new Pen(Color.Purple);
+        }
+
+        private void ChangeBlue(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.Blue);
+            Stift = new Pen(Color.Blue);
+        }
+
+        private void ChangeGreen(object instance, EventArgs e)
+        {
+            Pinsel = new SolidBrush(Color.Green);
+            Stift = new Pen(Color.Green);
+        }
+
+        #endregion
 
         protected void MouseReleased(object instance, MouseEventArgs args)
         {
@@ -45,7 +86,7 @@ namespace Paint
             {
                 Graphics graphics = CreateGraphics();
                 new_point = new Point(args.X, args.Y);
-                graphics.DrawEllipse(Pens.Brown,old_point.X, old_point.Y, new_point.X - old_point.X, new_point.Y - old_point.Y);
+                graphics.DrawEllipse(Stift,old_point.X, old_point.Y, new_point.X - old_point.X, new_point.Y - old_point.Y);
                 //Console.WriteLine("oldx: {0}, oldy: {1}, newx: {2},newy: {3}",old_point.X, old_point.Y, new_point.X, new_point.Y);
                 old_point = new_point;
                 mouse_active = false;
@@ -70,7 +111,6 @@ namespace Paint
             {
                 Graphics graphics = CreateGraphics();
                 new_point = new Point(args.X, args.Y);
-                SolidBrush brush = new SolidBrush(Color.Blue);
                 // Betrag der Vektoren der alten und der neuen Position
                 double distance = Math.Sqrt(Math.Pow((new_point.X - old_point.X), 2) + Math.Pow((new_point.Y - old_point.Y), 2));
                 // Wenn Distanz zwischen Intervallen so groß ist, dass die Lücke zwischen den platzierten Objekten größer als die Stiftgröße ist,
@@ -83,13 +123,13 @@ namespace Paint
                         int x = old_point.X + Convert.ToInt32((new_point.X - old_point.X) / value * (i + 1));
                         int y = old_point.Y + Convert.ToInt32((new_point.Y - old_point.Y) / value * (i + 1));
                         Rectangle rect = new Rectangle(x, y, pen_size, pen_size);
-                        graphics.FillEllipse(brush, rect);
+                        graphics.FillEllipse(Pinsel, rect);
                     }
                 }
                 else
                 {
                     Rectangle rect = new Rectangle(args.X, args.Y, pen_size, pen_size);
-                    graphics.FillEllipse(brush, rect);
+                    graphics.FillEllipse(Pinsel, rect);
                 }
 
                 old_point = new_point;
