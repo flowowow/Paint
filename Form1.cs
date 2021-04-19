@@ -14,12 +14,14 @@ namespace Paint
         public Form1()
         {
             InitializeComponent();
-
-            // Assigning mouse events
             this.MouseDown += MousePressed;
             this.MouseUp += MouseReleased;
             this.MouseMove += MouseMoved;
+            pen_size = this.trackBar1.Value;
         }
+
+        // Für Menü
+        // https://www.oreilly.com/library/view/net-windows-forms/0596003382/ch04.html
 
         protected void MousePressed(object instance, MouseEventArgs args)
         {
@@ -70,6 +72,16 @@ namespace Paint
 
                 old_point = new_point;
             }
+        }
+
+        protected void Resizing(object instance, EventArgs args)
+        {
+            Invalidate();
+        }
+
+        protected void trackBar_changes(object instance, EventArgs args)
+        {
+            pen_size = trackBar1.Value;
         }
     }
 }
