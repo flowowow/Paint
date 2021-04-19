@@ -1,4 +1,7 @@
-﻿namespace Paint
+﻿using System;
+using System.Windows.Forms;
+
+namespace Paint
 {
     partial class Form1
     {
@@ -38,6 +41,17 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+
+            this.MouseDown += MousePressed;
+            this.MouseUp += MouseReleased;
+            this.MouseMove += MouseMoved;
+
+            this.EllipsisButton = new Button();
+            EllipsisButton.Text = "Press for Ellipsis Tool";
+            EllipsisButton.Size = new System.Drawing.Size(70,60);
+            EllipsisButton.Location = new System.Drawing.Point(40,10);
+            EllipsisButton.Click += new EventHandler(EnableEllipsis);
+            this.Controls.Add(EllipsisButton);
             
         }
         #endregion
